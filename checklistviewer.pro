@@ -50,7 +50,7 @@ INCPATH += $${PROTOBUF_LIB_PATH}/src ./pbs
 
 LIBS   += -L$${OPENSSL_LIB_PATH}/lib
 unix:LIBS = -L$$/usr/lib64 $${LIBS} -lssl -lcrypto -lrt $${PROTOBUF_LIB_PATH}/src/.libs/libprotobuf.a
-win:LIBS   += $${PROTOBUF_LIB_PATH}/lib/libprotobuf.lib
+win32:LIBS   += $${PROTOBUF_LIB_PATH}/lib/libprotobuf.lib
 
 # install
 target.path = ../bin
