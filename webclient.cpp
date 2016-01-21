@@ -11,10 +11,7 @@ WebClient::WebClient(RequestHandler* handler, const QUrl& url)
     : handler_(handler), 
     url_(url), 
     state_(Initial)
-{
-    connect(&netmgr_, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),
-            this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
-}
+{}
 
 void WebClient::postLogon(const ParamsT& params)
 {
@@ -85,28 +82,8 @@ void WebClient::connectionError(QNetworkReply::NetworkError err)
     abort();
 }
 
-void WebClient::sslErrors(QNetworkReply* reply, QList<QSslError> errList)
-{
-    Q_UNUSED(reply);
-    QMessageBox::information( 
-        NULL, tr("SSL error"), tr("%1").arg(errList.cbegin()->errorString()) );
-    abort();
-}
-
 void WebClient::readyRead()
-{
-    /*
-    handler_->busy(false);
-    sync_->wakeOne();
-
-    reply_->readAattribute(QNetworkRequest::HttpStatusCodeAttribute);
-    
-    handler_->onReadyRead();
-    dataReceived_.reset( new QByteArray(reply_->readAll()) );
-    if( !dataReceived_.isNull() && dataReceived_->size() )
-        qDebug() << "Reply received: " << QString::fromLocal8Bit(*dataReceived_.data()); 
-    */
-}
+{}
 
 QString WebClient::errorString() const
 {

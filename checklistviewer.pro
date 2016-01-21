@@ -8,6 +8,8 @@ isEmpty(PROTOBUF_LIB_PATH) {
    error(please specify $PROTOBUFDIR environment in OS)
 }
 
+CONFIG += openssl
+
 HEADERS  = defedit.h \
            defines.h \
            dlgconnect.h \
@@ -45,8 +47,10 @@ SOURCES  = checklistviewer_plugin_import.cpp \
 QT      += network widgets
 
 INCPATH += $${PROTOBUF_LIB_PATH}/src ./pbs
-LIBS    += -L$${OPENSSL_LIB_PATH}/lib 
-LIBS    += -L$${PROTOBUF_LIB_PATH}/lib -llibprotobuf
+
+LIBS   += -L$${OPENSSL_LIB_PATH}/lib
+unix:LIBS = -L$$/usr/lib64 $${LIBS} -lssl -lcrypto -lrt $${PROTOBUF_LIB_PATH}/src/.libs/libprotobuf.a
+win:LIBS   += $${PROTOBUF_LIB_PATH}/lib/libprotobuf.lib
 
 # install
 target.path = ../bin

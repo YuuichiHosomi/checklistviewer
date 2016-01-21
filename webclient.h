@@ -8,6 +8,7 @@
 #include <QUrl>
 #include <QThread>
 #include <QMutex>
+#include <QSharedPointer>
 
 /////////////////////////////////////////////////////////
 class WebClient : public QThread, public RequestHandler
@@ -38,7 +39,6 @@ protected Q_SLOTS:
     void readyRead();
     void finished();
     void connectionError(QNetworkReply::NetworkError);
-    void sslErrors(QNetworkReply* reply, QList<QSslError> errList);
 
 private:
     QByteArray createContentBase64(const ParamsT& params);
