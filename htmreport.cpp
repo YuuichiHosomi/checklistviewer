@@ -31,6 +31,19 @@ void HtmReport::refresh()
     cursor.insertHtml(html_);
 }
 
+bool HtmReport::event(QEvent* e)
+{
+    bool ret = QTextEdit::event(e);
+
+    // move to top is always after dialog show
+    if( e->type() == QEvent::Show ) {
+        QScrollBar* s = verticalScrollBar();
+        if( s )
+            emit s->setValue(0);
+    }
+    return ret;
+}
+
 void HtmReport::clear()
 {
     html_.clear();
@@ -46,7 +59,7 @@ void HtmReport::addTasksList(const TasksListDocument& doc)
 
     QList<QString>::const_iterator It = doc.tasks.cbegin();
     for(; It !=  doc.tasks.cend(); ++It )
-        html += "<tr><td width=\"100%\"><b>" + *It + "</b></td></tr>";
+        html += "<tr><td width=\"100%\"><a href=\"#" + *It + "\"><b>" + *It + "</b></a></td></tr>";
     html_ += html + "</table><p/><br/><p/>";
 }
 
@@ -71,7 +84,7 @@ void HtmReport::addTask(const TaskDocument& doc)
 
     QString html = 
 tableH0 + 
-"<td align=\"left\"><b>" + doc.alias + "</b></td>" + 
+"<td align=\"left\"><a name=\"" + doc.alias + "\"><b>" + doc.alias + "</b></a></td>" + 
 tableD + tableH1 + 
 "<td align=\"center\"><b>" + doc.title + "</b></td>" + 
 tableD + tableH2 + 

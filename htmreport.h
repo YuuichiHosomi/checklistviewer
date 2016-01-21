@@ -23,6 +23,7 @@ public:
     static QString statusHTTPToString(qint32 status);
 
 protected:
+    bool event(QEvent* e);
     
 private:
     QString html_;
